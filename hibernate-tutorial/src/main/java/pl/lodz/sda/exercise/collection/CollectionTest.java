@@ -1,6 +1,8 @@
 package pl.lodz.sda.exercise.collection;
 
-import org.hibernate.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import pl.lodz.sda.dao.Address;
 import pl.lodz.sda.dao.Company;
 import pl.lodz.sda.dao.Department;
@@ -9,7 +11,6 @@ import pl.lodz.sda.environment.DB;
 import pl.lodz.sda.tools.HibernateSessionFactory;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class CollectionTest {
@@ -40,26 +41,39 @@ public class CollectionTest {
         company.setDepartment(dps);
         address.setCompany(company);
 
-        Session session = null;
         Transaction tx;
-
+        Session session = null;
+        SessionFactory sessionFactory = null;
         try {
-            session = HibernateSessionFactory.createSession(DB.H2);
-            session.setCacheMode(CacheMode.IGNORE);
+            sessionFactory = HibernateSessionFactory.createSessionFactory(DB.H2);
+            session = sessionFactory.openSession();
             tx = session.beginTransaction();
-
             session.save(company);
+            System.out.println(company.getDepartment());
             tx.commit();
 
-//            Criteria criteria = session.createCriteria(Company.class);
-//            List list = criteria.list();
-//            list.forEach(o -> System.out.println(list));
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Company company1 = session.get(Company.class, 1l);
+            session.getTransaction().commit();
+            session.close();
 
-            String sql = "SELECT * FROM company c";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Company.class);
-            List<Company> list = query.list();
-            list.forEach(System.out::println);
+            System.out.println(company1.getDepartment());
+
+//            List<Company> list = criteria.list();
+//            list.forEach(o -> System.out.println(list));
+//            Criteria criteria = session.createCriteria(Company.class);
+//            List<Company> list = criteria.list();
+//            System.out.println(Hibernate.isInitialized(list.get(0).getAddress()));
+//            System.out.println(list.get(0));
+//
+//            String sql = "SELECT * FROM company c";
+//            SQLQuery query = session.createSQLQuery(sql);
+//            query.addEntity(Company.class);
+//            List<Company> list = query.list();
+//            list.forEach(System.out::println);
+//            System.out.println(Hibernate.isInitialized(Address.class));
+
 
 //            tx = session.beginTransaction();
 //            session.delete(company);
@@ -72,9 +86,10 @@ public class CollectionTest {
 
         } catch (Exception e) {
             System.out.println("Exception occured. " + e.getMessage());
+            HibernateSessionFactory.closeSessionFactory(sessionFactory);
             e.printStackTrace();
         } finally {
-            HibernateSessionFactory.closeAll(session);
+            HibernateSessionFactory.closeSessionFactory(sessionFactory);
         }
 
     }

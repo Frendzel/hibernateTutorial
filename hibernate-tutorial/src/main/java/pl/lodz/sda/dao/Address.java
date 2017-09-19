@@ -24,7 +24,7 @@ public class Address {
     @Column(name = "country")
     String country;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     Company company;
 

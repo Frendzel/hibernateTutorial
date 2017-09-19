@@ -1,5 +1,6 @@
 package pl.lodz.sda.tools;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pl.lodz.sda.environment.DB;
@@ -24,7 +25,6 @@ public class HibernateSessionFactory {
         // Pamiętamy, że sessionFactory powinno być tworzone jedno per połączenie do DB
         // Ustawiamy konfigurację dla naszego sessionFactory
         String configurationFileName = getConfigurationFileName(db);
-        System.out.println("create session factory");
         return SingletonSessionFactory.getInstance(configurationFileName);
     }
 
@@ -39,9 +39,15 @@ public class HibernateSessionFactory {
     }
 
     public static void closeSessionFactory(SessionFactory sessionFactory) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.close();
-        sessionFactory.close();
+        try {
+            Session currentSession = sessionFactory.getCurrentSession();
+            currentSession.close();
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            sessionFactory.close();
+        }
+
     }
 
     public static void closeAll(Session session) {

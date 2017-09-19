@@ -16,8 +16,8 @@ public class Company {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Department> department = new HashSet<>();
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Department> department;
 
     @OneToOne(mappedBy = "company",
             cascade = CascadeType.ALL,
@@ -64,14 +64,15 @@ public class Company {
     public void setAddress(Address address) {
         this.address = address;
     }
-//
-//    @Override
-//    public String toString() {
-//        return "Company{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", departmentsSize=" + department.size() +
-//                ", address=" + address +
-//                '}';
-//    }
+
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                (id != null ? "id=" + id : "") +
+                (name != null ? ", name='" + name + '\'' : "") +
+                (department != null ? ", department=" + department : "") +
+                (address != null ? ", address=" + address : "") +
+                '}';
+    }
 }

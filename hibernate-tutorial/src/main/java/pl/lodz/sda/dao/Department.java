@@ -21,7 +21,7 @@ public class Department {
     //The @JoinColumn annotation is used to specify the FOREIGN KEY column used when
     @ManyToOne
     @JoinColumn(name = "company_id",
-            nullable = false)
+            nullable = true)
     Company company;
 
     public Department() {
@@ -75,7 +75,7 @@ public class Department {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", company=" + company.toString() +
+                ", company=" + company.getName() +
                 ", departmentAdress=" + departmentAdress.toString() +
                 '}';
     }
