@@ -7,24 +7,23 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "task_id")
     Long id;
 
     @Column(name = "name")
     String name;
 
-    public Task(Long id, String name, String description) {
-        this.id = id;
+    @Column(name = "description")
+    String description;
+
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
     public Task() {
     }
-
-    @Column(name = "description")
-    String description;
 
     public Long getId() {
         return id;
@@ -48,5 +47,34 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        if (!id.equals(task.id)) return false;
+        if (!name.equals(task.name)) return false;
+        return description != null ? description.equals(task.description) : task.description == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

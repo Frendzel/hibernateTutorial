@@ -7,16 +7,21 @@ import javax.persistence.*;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "department_id")
     Long id;
 
     @Column(name = "name")
     String name;
 
-    //The @JoinColumn annotation is used to specify the FOREIGN KEY column used when joining an entity association or an embeddable collection.
+    @Embedded
+    DepartmentAdress departmentAdress;
+
+    // joining an entity association or an embeddable collection.
+    //The @JoinColumn annotation is used to specify the FOREIGN KEY column used when
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @JoinColumn(name = "company_id",
+            nullable = false)
     Company company;
 
     public Department() {
@@ -26,10 +31,19 @@ public class Department {
         this.company = company;
     }
 
-    public Department(Long id, String name, Company company) {
+    public Department(Long id, String name, Company company, DepartmentAdress departmentAdress) {
         this.id = id;
         this.name = name;
         this.company = company;
+        this.departmentAdress = departmentAdress;
+    }
+
+    public DepartmentAdress getDepartmentAdress() {
+        return departmentAdress;
+    }
+
+    public void setDepartmentAdress(DepartmentAdress departmentAdress) {
+        this.departmentAdress = departmentAdress;
     }
 
     public Long getId() {
@@ -62,6 +76,7 @@ public class Department {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", company=" + company.toString() +
+                ", departmentAdress=" + departmentAdress.toString() +
                 '}';
     }
 }
