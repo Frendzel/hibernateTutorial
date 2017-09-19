@@ -2,13 +2,13 @@ package pl.lodz.sda.tools;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import pl.lodz.sda.environment.DB;
 
 import static pl.lodz.sda.environment.DB.H2;
 
 public class HibernateSessionFactory {
 
+    private SessionFactory sessionFactory;
 
     private static String getConfigurationFileName(DB db) {
         if (db == H2) {
@@ -25,17 +25,11 @@ public class HibernateSessionFactory {
         // Ustawiamy konfigurację dla naszego sessionFactory
         String configurationFileName = getConfigurationFileName(db);
         System.out.println("create session factory");
-        return new Configuration().configure(configurationFileName) // configures settings from hibernate.cfg-h2.xml
-                .buildSessionFactory();
+        return SingletonSessionFactory.getInstance(configurationFileName);
     }
 
     public static Session createSession(DB db) {
-        SessionFactory sessionFactory = createSessionFactory(db);
-        return sessionFactory.openSession();
-    }
-
-
-    public static Session getSession(DB db) {
+        // czy sessionFactory otwarte
         SessionFactory sessionFactory = createSessionFactory(db);
         return sessionFactory.openSession();
     }

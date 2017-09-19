@@ -20,16 +20,24 @@ public class App {
             // Rozpoczynamy transakcję w sesji
             System.out.println("Begin transaction");
             Transaction tx = session.beginTransaction();
-            Task task = new Task();
-            task.setId(1L);
-            task.setName("Hello world task");
-            task.setDescription("Hello world task description");
-            // zapisujemy w sesji nasz obiekt
-            System.out.println("save");
-            session.save(task);
+            long startTime = System.currentTimeMillis();
+            for (int i = 0; i < 1000000; i++) {
+                Task task = new Task("1" + i, "2");
+                // zapisujemy w sesji nasz obiekt
+                System.out.println("save: " + i + " " + task);
+                session.save(task);
+                if( i % 50 == 0 ) {
+                    session.flush();
+                    session.clear();
+                }
+            }
             // Commitujemy zmiany
             System.out.println("commit");
+            //bez batcha 19788 // 19852
+            System.out.println(System.currentTimeMillis() - startTime);
             tx.commit();
+            //bez batcha 43668 // 46279 // 33s //32287 // 33238
+            System.out.println(System.currentTimeMillis() - startTime);
         } catch (Exception e) {
             //log
         } finally {
