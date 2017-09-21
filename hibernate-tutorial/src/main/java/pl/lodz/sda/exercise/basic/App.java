@@ -2,7 +2,7 @@ package pl.lodz.sda.exercise.basic;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pl.lodz.sda.dao.Task;
+import pl.lodz.sda.model.Task;
 import pl.lodz.sda.environment.DB;
 import pl.lodz.sda.tools.HibernateSessionFactory;
 

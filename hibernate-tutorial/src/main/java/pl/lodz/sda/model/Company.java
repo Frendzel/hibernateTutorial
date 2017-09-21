@@ -1,7 +1,6 @@
-package pl.lodz.sda.dao;
+package pl.lodz.sda.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,9 @@ public class Company {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private Set<Department> department;
 
     @OneToOne(mappedBy = "company",

@@ -40,7 +40,8 @@ public class HibernateSessionFactory {
 
     public static void closeSessionFactory(SessionFactory sessionFactory) {
         try {
-            Session currentSession = sessionFactory.getCurrentSession();
+            Session currentSession =
+                    sessionFactory.getCurrentSession();
             currentSession.close();
         } catch (HibernateException e) {
             System.out.println(e);

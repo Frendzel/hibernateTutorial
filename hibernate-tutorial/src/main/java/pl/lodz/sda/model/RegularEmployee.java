@@ -1,11 +1,11 @@
-package pl.lodz.sda.dao;
+package pl.lodz.sda.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("regularemployee")
+//@DiscriminatorValue("regularemployee")
+//@PrimaryKeyJoinColumn(name="ID")
 public class RegularEmployee extends Employee {
 
     @Column(name = "salary")

@@ -7,11 +7,11 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- Assume test is the database name -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:330/dbo</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dbo</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"/>
         <property name="hbm2ddl.auto">validate</property>
         <!-- Classes that needs to be mapped -->
-        <!--<mapping class="pl.lodz.sda.dao.Task"/>-->
+        <!--<mapping class="pl.lodz.sda.model.Task"/>-->
     </session-factory>
 </hibernate-configuration>

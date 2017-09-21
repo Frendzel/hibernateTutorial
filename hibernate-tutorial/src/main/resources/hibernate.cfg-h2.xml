@@ -25,12 +25,12 @@
         <!--<property name="hibernate.jdbc.batch_size">1000</property>-->
         <!--<property name="hibernate.cache.generate_statistics">true</property>-->
         <!-- Classes that needs to be mapped -->
-        <mapping class="pl.lodz.sda.dao.Task"/>
-        <mapping class="pl.lodz.sda.dao.Company"/>
-        <mapping class="pl.lodz.sda.dao.Department"/>
-        <mapping class="pl.lodz.sda.dao.Address"/>
-        <mapping class="pl.lodz.sda.dao.Employee"/>
-        <mapping class="pl.lodz.sda.dao.ContractEmployee"/>
-        <mapping class="pl.lodz.sda.dao.RegularEmployee"/>
+        <mapping class="pl.lodz.sda.model.Task"/>
+        <mapping class="pl.lodz.sda.model.Company"/>
+        <mapping class="pl.lodz.sda.model.Department"/>
+        <mapping class="pl.lodz.sda.model.Address"/>
+        <mapping class="pl.lodz.sda.model.Employee"/>
+        <mapping class="pl.lodz.sda.model.ContractEmployee"/>
+        <mapping class="pl.lodz.sda.model.RegularEmployee"/>
     </session-factory>
 </hibernate-configuration>

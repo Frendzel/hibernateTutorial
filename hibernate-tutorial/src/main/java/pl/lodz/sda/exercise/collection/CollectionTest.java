@@ -1,16 +1,19 @@
 package pl.lodz.sda.exercise.collection;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import pl.lodz.sda.dao.Address;
-import pl.lodz.sda.dao.Company;
-import pl.lodz.sda.dao.Department;
-import pl.lodz.sda.dao.DepartmentAdress;
+import org.hibernate.criterion.Restrictions;
+import pl.lodz.sda.model.Address;
+import pl.lodz.sda.model.Company;
+import pl.lodz.sda.model.Department;
+import pl.lodz.sda.model.DepartmentAdress;
 import pl.lodz.sda.environment.DB;
 import pl.lodz.sda.tools.HibernateSessionFactory;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CollectionTest {
@@ -55,17 +58,19 @@ public class CollectionTest {
             session = sessionFactory.openSession();
             session.beginTransaction();
             Company company1 = session.get(Company.class, 1l);
+            company1.getDepartment();
             session.getTransaction().commit();
-            session.close();
 
             System.out.println(company1.getDepartment());
 
-//            List<Company> list = criteria.list();
-//            list.forEach(o -> System.out.println(list));
-//            Criteria criteria = session.createCriteria(Company.class);
-//            List<Company> list = criteria.list();
-//            System.out.println(Hibernate.isInitialized(list.get(0).getAddress()));
-//            System.out.println(list.get(0));
+            Criteria criteria = session.
+                    createCriteria(Company.class)
+                    .add(Restrictions.
+                            eq("name", "test"));
+            List<Company> list = criteria.list();
+            System.out.println("TUTAJ JESTEM!"+list.get(0));
+            session.close();
+
 //
 //            String sql = "SELECT * FROM company c";
 //            SQLQuery query = session.createSQLQuery(sql);

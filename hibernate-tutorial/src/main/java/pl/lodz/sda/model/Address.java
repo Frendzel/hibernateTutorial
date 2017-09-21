@@ -1,7 +1,6 @@
-package pl.lodz.sda.dao;
+package pl.lodz.sda.model;
 
 import javax.persistence.*;
-import java.awt.event.ComponentAdapter;
 
 @Entity
 @Table(name = "address")
