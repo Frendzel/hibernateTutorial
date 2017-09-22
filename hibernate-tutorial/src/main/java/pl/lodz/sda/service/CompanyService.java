@@ -20,4 +20,8 @@ public class CompanyService {
     public Company saveCompany(Company company) {
         return companyManager.save(company);
     }
+
+    public Company findFirstCompany() {
+        return companyManager.find(1l);
+    }
 }
