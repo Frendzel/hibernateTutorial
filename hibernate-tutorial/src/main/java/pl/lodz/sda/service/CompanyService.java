@@ -4,6 +4,7 @@ import pl.lodz.sda.dao.CompanyManager;
 import pl.lodz.sda.model.Company;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CompanyService {
 
@@ -23,5 +24,15 @@ public class CompanyService {
 
     public Company findFirstCompany() {
         return companyManager.find(1l);
+    }
+    public Company findCompany(long idCompany) {
+        return companyManager.find(idCompany);
+    }
+    public List<Company> findAll() {
+        return companyManager.findAll();
+    }
+
+    public Company delete(long l) {
+        return companyManager.delete(l);
     }
 }

@@ -25,7 +25,7 @@ public class CompanyManager implements IManager<Company> {
 
     private void init() throws IOException {
         session = HibernateSessionFactory.
-                createSession(propertiesLoader.getDb());
+                createSession();
     }
 
     private void openTransaction() {
@@ -39,11 +39,6 @@ public class CompanyManager implements IManager<Company> {
     private void closeSession() {
         session.close();
     }
-
-    private void closeAll() {
-        HibernateSessionFactory.closeAll(session);
-    }
-
 
     @Override
     public Company save(Company entity) {
@@ -83,7 +78,7 @@ public class CompanyManager implements IManager<Company> {
             init();
             Criteria criteria = session.createCriteria(Company.class).
                     add(Restrictions.
-                            eq("company_id", id));
+                            eq("id", id));
             List<Company> list = criteria.list();
             // CollectionUtils
             return !list.isEmpty() ? list.get(0) : null;
@@ -97,7 +92,15 @@ public class CompanyManager implements IManager<Company> {
 
     @Override
     public List<Company> findAll() {
-        return null;
+        try {
+            init();
+            return session.createCriteria(Company.class).list();
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
@@ -106,7 +109,11 @@ public class CompanyManager implements IManager<Company> {
     }
 
     @Override
-    public void delete() {
-
+    public Company delete(long id) {
+        //TODO
+        return null;
     }
+
+
+
 }

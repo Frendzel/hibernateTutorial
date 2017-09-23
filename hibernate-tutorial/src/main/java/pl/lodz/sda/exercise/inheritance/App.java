@@ -4,7 +4,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pl.lodz.sda.model.ContractEmployee;
-import pl.lodz.sda.environment.DB;
 import pl.lodz.sda.tools.HibernateSessionFactory;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class App {
         Transaction tx;
 
         try {
-            session = HibernateSessionFactory.createSession(DB.H2);
+            session = HibernateSessionFactory.createSession();
             Transaction transaction = session.beginTransaction();
             session.save(contractEmployee);
             transaction.commit();

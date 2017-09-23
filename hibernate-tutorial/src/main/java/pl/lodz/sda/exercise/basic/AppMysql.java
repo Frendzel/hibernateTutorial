@@ -2,7 +2,6 @@ package pl.lodz.sda.exercise.basic;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pl.lodz.sda.environment.DB;
 import pl.lodz.sda.tools.HibernateSessionFactory;
 
 public class AppMysql {
@@ -13,7 +12,7 @@ public class AppMysql {
         Transaction tx = null;
 
         try {
-            session = HibernateSessionFactory.createSession(DB.MYSQL);
+            session = HibernateSessionFactory.createSession();
 //            tx = session.beginTransaction();
 //            tx.begin();
 //            tx.commit();

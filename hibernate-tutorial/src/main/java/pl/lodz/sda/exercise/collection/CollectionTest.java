@@ -70,6 +70,10 @@ public class CollectionTest {
             List<Company> list = criteria.list();
             System.out.println("TUTAJ JESTEM!"+list.get(0));
             session.close();
+            System.out.println("Moje sessionFactory: "+
+                    session.getSessionFactory());
+            SessionFactory sessionFactory1 = session.getSessionFactory();
+            System.out.println("moja nwoa sesja"+sessionFactory1.openSession());
 
 //
 //            String sql = "SELECT * FROM company c";
@@ -91,10 +95,10 @@ public class CollectionTest {
 
         } catch (Exception e) {
             System.out.println("Exception occured. " + e.getMessage());
-            HibernateSessionFactory.closeSessionFactory(sessionFactory);
+            HibernateSessionFactory.closeSessionFactory();
             e.printStackTrace();
         } finally {
-            HibernateSessionFactory.closeSessionFactory(sessionFactory);
+            HibernateSessionFactory.closeSessionFactory();
         }
 
     }

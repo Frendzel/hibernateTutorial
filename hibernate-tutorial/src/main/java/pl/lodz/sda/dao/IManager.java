@@ -14,5 +14,5 @@ public interface IManager<T> {
 
     public void deleteAll();
 
-    public void delete();
+    public T delete(long id);
 }

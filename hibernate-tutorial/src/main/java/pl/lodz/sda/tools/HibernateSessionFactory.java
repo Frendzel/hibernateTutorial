@@ -9,7 +9,15 @@ import static pl.lodz.sda.environment.DB.H2;
 
 public class HibernateSessionFactory {
 
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
+
+    public HibernateSessionFactory(DB db) {
+        sessionFactory = createSessionFactory(db);
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 
     private static String getConfigurationFileName(DB db) {
         if (db == H2) {
@@ -25,34 +33,28 @@ public class HibernateSessionFactory {
         // Pamiętamy, że sessionFactory powinno być tworzone jedno per połączenie do DB
         // Ustawiamy konfigurację dla naszego sessionFactory
         String configurationFileName = getConfigurationFileName(db);
-        return SingletonSessionFactory.getInstance(configurationFileName);
+        sessionFactory = SingletonSessionFactory.getInstance(configurationFileName);
+        return sessionFactory;
     }
 
-    public static Session createSession(DB db) {
+    public static Session createSession() {
         // czy sessionFactory otwarte
-        SessionFactory sessionFactory = createSessionFactory(db);
         return sessionFactory.openSession();
     }
-
-    public static void closeSession(Session session) {
-        session.close();
-    }
-
-    public static void closeSessionFactory(SessionFactory sessionFactory) {
+    public static void closeSessionFactory() {
         try {
-            Session currentSession =
-                    sessionFactory.getCurrentSession();
+            Session currentSession = sessionFactory.getCurrentSession();
             currentSession.close();
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
             sessionFactory.close();
+            System.out.println("Session factory has been closed!");
         }
 
     }
 
     public static void closeAll(Session session) {
-        SessionFactory sessionFactory = session.getSessionFactory();
         session.close();
         sessionFactory.close();
     }

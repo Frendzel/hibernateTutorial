@@ -1,11 +1,14 @@
 package pl.lodz.sda.model;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "company")
-public class Company {
+public class Company implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -65,7 +68,6 @@ public class Company {
     public void setAddress(Address address) {
         this.address = address;
     }
-
 
     @Override
     public String toString() {
